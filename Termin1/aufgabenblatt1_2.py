@@ -1,5 +1,5 @@
 # erstellen der liste und entscheidung des indices
-liste = list(range(1,10))
+liste = list(range(1,11))
 index = int(input("select an index"))
 
 # aufteilen der liste

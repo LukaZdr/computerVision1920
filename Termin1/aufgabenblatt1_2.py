@@ -3,7 +3,7 @@ liste = list(range(1,10))
 index = int(input("select an index"))
 
 # aufteilen der liste
-begin_list = liste[:(index-1)]
+begin_list = liste[:index]
 element = liste[index]
 end_list = liste[(index+1):]
 

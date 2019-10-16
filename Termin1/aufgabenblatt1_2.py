@@ -5,7 +5,7 @@ index = int(input("select an index"))
 # aufteilen der liste
 begin_list = liste[:index]
 element = liste[index]
-end_list = liste[(index+1):]
+end_list = liste[index+1:]
 
 #zusammenfuegen der liste
 result = begin_list[::-1]

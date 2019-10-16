@@ -15,4 +15,3 @@ def scrabble(word):
     for char in word:
          scrabble_wert += werte[char]
     return scrabble_wert
-    

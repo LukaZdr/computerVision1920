@@ -14,7 +14,11 @@ def eukl_dis(img_1, img_2):
     for index in range(bin_count-1):
         diff =  histo_1[0][index-1]-histo_2[0][index-1]
         summe += np.absolute(diff)**2
+        # alternative
+        # a und b sind spalten der beiden histogramme
+        # np.sqrt(np.sum((a-b)**2)))
     return np.sqrt(summe)
+
 
 img_1 = imread("./agri3.png")
 img_2 = imread("./agri6.png")

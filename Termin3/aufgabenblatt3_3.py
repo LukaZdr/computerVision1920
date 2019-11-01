@@ -3,9 +3,9 @@
 
 import numpy as np
 
-labes_names = {
+label_names = {
         1: "auto",
-        4: "hirsch"
+        4: "hirsch",
         8: "schiff"}
 
 d = np.load('./trainingsDaten2.npz')
@@ -29,18 +29,17 @@ def euklidDistanzHisto(histo_1, histo_2):
     return np.sqrt(np.sum((histo_1[0]-histo_2[0])**2))
 
 estimated_labels = []
-    
+
 for va_histo in va_histos:
     distanzen =  []
     for tr_histo in tr_histos:
         distanzen.append(euklidDistanzHisto(va_histo, tr_histo))
     relative_img_index = distanzen.index(np.min(distanzen))
-    print(np.min(distanzen))
     estimated_labels.append(tr_labels[relative_img_index])
 
 #verglecihen von estimated und tatsächlich
 right_est = 0
- 
+
 for index in range(len(va_labels)):
     if va_labels[index] == estimated_labels[index]:
         right_est += 1
@@ -52,23 +51,26 @@ trefferquote = (right_est  * 100) / len(estimated_labels)
 
 print(trefferquote)
 
-table_content = {
-        1: {
-            1: 0,
-            4: 0,
-            8: 0
+def make_confusion_matrix(est_values, actual_values):
+    table_content = {
+        "auto": {
+            "auto": 0,
+            "hirsch": 0,
+            "schiff": 0
             },
-        4: {
-            1: 0,
-            4: 0,
-            8: 0
+        "hirsch": {
+            "auto": 0,
+            "hirsch": 0,
+            "schiff": 0
             },
-        8: {
-            1: 0,
-            4: 0,
-            8: 0
+        "schiff": {
+            "auto": 0,
+            "hirsch": 0,
+            "schiff": 0
             }
         }
-def make_confusion_matrix(est_vals, actual_vals):
-    for est_val in est_values:
-    
+    for index, est_value in enumerate(est_values):
+        table_content[label_names[est_value]][label_names[actual_values[index]]] += 1
+    return table_content
+
+print(make_confusion_matrix(estimated_labels, va_labels))

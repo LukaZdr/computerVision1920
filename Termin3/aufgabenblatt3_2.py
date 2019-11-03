@@ -25,7 +25,7 @@ def euklidDistanzHisto(histo_1, histo_2):
     return np.sqrt(np.sum((histo_1[0]-histo_2[0])**2))
 
 estimated_labels = []
-    
+
 for va_histo in va_histos:
     distanzen =  []
     for tr_histo in tr_histos:
@@ -36,7 +36,7 @@ for va_histo in va_histos:
 
 #verglecihen von estimated und tatsächlich
 right_est = 0
- 
+
 for index in range(len(va_labels)):
     if va_labels[index] == estimated_labels[index]:
         right_est += 1

@@ -86,7 +86,7 @@ est_labels = rgb_img_n_nearest_neighbour(va_imgs, tr_imgs, count_neighbour)
 # Statistik
 print(guessing_accuracy(est_labels, va_labels))
 
-
+#bestes ergebniss
 # bin_count: 6
 # neighbours 5
 # weight: 0.1

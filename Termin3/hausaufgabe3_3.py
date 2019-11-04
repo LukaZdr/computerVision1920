@@ -60,4 +60,7 @@ print(count)
 
 print(count/len(valImgs)*100, "%")
 
-# Die Ergebnisse verbessern sich, die Trefferquote liegt bei 50%
+# Besten Ergebnisse
+"""
+Die besten Ergebnisse sind bei den bin counts 7 und 19 und Ergeben eine Genauigkeit von 56.666666666666664 %
+"""

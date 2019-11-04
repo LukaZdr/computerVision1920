@@ -74,3 +74,13 @@ def make_confusion_matrix(est_values, actual_values):
     return table_content
 
 print(make_confusion_matrix(estimated_labels, va_labels))
+
+"""
+Unser Ergebniss ist ein 2D-Dict in dem die erste Schicht die richtigen Labels sind und die zweite Schicht die erratenen Labels.
+Heist der Aufruf:
+
+ergebnis_2d_dict[4][8]
+>>> 5
+
+bedeutet das beim label 4 fuenf mal das Label 8 geraten wurde
+"""

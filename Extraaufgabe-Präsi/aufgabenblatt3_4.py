@@ -10,9 +10,9 @@ def rgb_img_to_3d_histo(img):
 	img =  img.reshape((img.shape[0]*img.shape[1],3))
 	return np.histogramdd(img, bins = [bin_count,bin_count,bin_count], range=((0,256),(0,256),(0,256)))
 
-def eukl_dist(x,y): 
+def eukl_dist(x,y):
 		return np.sqrt(np.sum((x-y)**2))
-	
+
 def intersection(hist_1, hist_2):
     minima = np.minimum(hist_1, hist_2)
     intersection = np.true_divide(np.sum(minima), np.sum(hist_2))
@@ -76,7 +76,7 @@ def calculate_combined_weighted_distanze(image_1, image_2): # nimmt die euklidis
 		distance_2 = intersection(deskr_2_img_1, deskr_2_img_2)
 
 	return distance_1 + weight * distance_2
-	
+
 def rgb_img_n_nearest_neighbour(va_imgs, tr_imgs): # brechnet durch die n naechsten nachbarn das warcheinliche label
 	est_labels_list = []
 	for va_img in va_imgs:

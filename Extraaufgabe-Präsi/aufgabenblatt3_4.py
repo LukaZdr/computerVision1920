@@ -47,6 +47,9 @@ def calculate_combined_weighted_distanze(image_1, image_2): # nimmt die euklidis
 	elif descriptor_1 == 'mean':
 		deskr_1_img_1 = rgb_img_mean(image_1)
 		deskr_1_img_2 = rgb_img_mean(image_2)
+	elif descriptor_1 == '0':
+		deskr_1_img_1 = 0
+		deskr_1_img_2 = 0
 
 	# Beladen der zweiten beiden Merkmale
 	if descriptor_2 == '1d_histo':
@@ -61,6 +64,9 @@ def calculate_combined_weighted_distanze(image_1, image_2): # nimmt die euklidis
 	elif descriptor_2 == 'mean':
 		deskr_2_img_1 = rgb_img_mean(image_1)
 		deskr_2_img_2 = rgb_img_mean(image_2)
+	elif descriptor_2 == '0':
+		deskr_2_img_1 = 0
+		deskr_2_img_2 = 0
 	
 	if dist_ma == 'euklid':
 		distance_1 = eukl_dist(deskr_1_img_1, deskr_1_img_2)

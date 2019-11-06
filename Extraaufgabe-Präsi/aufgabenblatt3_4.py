@@ -33,14 +33,14 @@ def elements_for_index_list(index_list, elements_list): # gibt fuer eine liste a
 def most_common_occurrence(element_list): # gibt das am oeften auftretende element zurueck
 	return max(element_list,key=element_list.count)
 
-def calculate_combined_weighted_distanze(image_1, weight, image_2): # nimmt die euklidische distanz von dem mittelwert und histogrammen und summiert sie gewichtet auf
+def calculate_combined_weighted_distanze(image_1, image_2): # nimmt die euklidische distanz von dem mittelwert und histogrammen und summiert sie gewichtet auf
 	# Beladen der ersten beiden Merkmale
 	if descriptor_1 == '1d_histo':
-		deskr_1_img_1 = rgb_img_to_1d_histo(image_1)
-		deskr_1_img_2 = rgb_img_to_1d_histo(image_2)
+		deskr_1_img_1 = rgb_img_to_1d_histo(image_1)[0]
+		deskr_1_img_2 = rgb_img_to_1d_histo(image_2)[0]
 	elif descriptor_1 == '3d_histo':
-		deskr_1_img_1 = rgb_img_to_3d_histo(image_1)
-		deskr_1_img_2 = rgb_img_to_3d_histo(image_2)
+		deskr_1_img_1 = rgb_img_to_3d_histo(image_1)[0]
+		deskr_1_img_2 = rgb_img_to_3d_histo(image_2)[0]
 	elif descriptor_1 == 'std':
 		deskr_1_img_1 = np.std(image_1)
 		deskr_1_img_2 = np.std(image_2)
@@ -49,37 +49,34 @@ def calculate_combined_weighted_distanze(image_1, weight, image_2): # nimmt die 
 		deskr_1_img_2 = rgb_img_mean(image_2)
 
 	# Beladen der zweiten beiden Merkmale
-	if descriptor_1 == '1d_histo':
-		deskr_2_img_1 = rgb_img_to_1d_histo(image_1)
-		deskr_2_img_2 = rgb_img_to_1d_histo(image_2)
-	elif descriptor_1 == '3d_histo':
-		deskr_2_img_1 = rgb_img_to_3d_histo(image_1)
-		deskr_2_img_2 = rgb_img_to_3d_histo(image_2)
-	elif descriptor_1 == 'std':
+	if descriptor_2 == '1d_histo':
+		deskr_2_img_1 = rgb_img_to_1d_histo(image_1)[0]
+		deskr_2_img_2 = rgb_img_to_1d_histo(image_2)[0]
+	elif descriptor_2 == '3d_histo':
+		deskr_2_img_1 = rgb_img_to_3d_histo(image_1)[0]
+		deskr_2_img_2 = rgb_img_to_3d_histo(image_2)[0]
+	elif descriptor_2 == 'std':
 		deskr_2_img_1 = np.std(image_1)
 		deskr_2_img_2 = np.std(image_2)
-	elif descriptor_1 == 'mean':
+	elif descriptor_2 == 'mean':
 		deskr_2_img_1 = rgb_img_mean(image_1)
 		deskr_2_img_2 = rgb_img_mean(image_2)
 	
 	if dist_ma == 'euklid':
+		distance_1 = eukl_dist(deskr_1_img_1, deskr_1_img_2)
+		distance_2 = eukl_dist(deskr_2_img_1, deskr_2_img_2)
+	elif dist_ma == 'intersect':
+		distance_1 = intersection(deskr_1_img_1, deskr_1_img_2)
+		distance_2 = intersection(deskr_2_img_1, deskr_2_img_2)
 
-	distance_1 = eukl_dist(deskr_1_img_1, deskr_1_img_2)
-	
-	distance_2 = eukl_dist(rgb_img_to_3d_histo(image_1, bin_count)[0],
-												 rgb_img_to_3d_histo(image_2, bin_count)[0])
-	
-	# mit 2d histogrammen										
-	# distance_2 = eukl_dist(rgb_img_to_1d_histo(image_1, bin_count)[0],
-	# 											 rgb_img_to_1d_histo(image_2, bin_count)[0])
 	return distance_1 + weight * distance_2
 	
-def rgb_img_n_nearest_neighbour(va_imgs, tr_imgs, neighbour_count): # brechnet durch die n naechsten nachbarn das warcheinliche label
+def rgb_img_n_nearest_neighbour(va_imgs, tr_imgs): # brechnet durch die n naechsten nachbarn das warcheinliche label
 	est_labels_list = []
 	for va_img in va_imgs:
 		distances = []
 		for tr_img in tr_imgs:
-			distance = calculate_combined_weighted_distanze(va_img, weight, tr_img)
+			distance = calculate_combined_weighted_distanze(va_img, tr_img)
 			distances.append(distance)
 		index_list = indices_of_n_smallest_values(neighbour_count, distances)
 		n_closest_labels = elements_for_index_list(index_list, tr_labels)
@@ -95,12 +92,10 @@ def guessing_accuracy(est_labels, va_labels): # Wirft auf der console infos aus 
 
 # Params
 bin_count = 3
-count_neighbour = 10
+neighbour_count = 10
 weight = 3
-# distanzmas ist entweder euklid oder intersect
-dist_ma = 'euklid' 
-# diskriptoren sind: 1d_histo, 3d_histo, std, mean
-descriptor_1 = '3d_histo'
+dist_ma = 'euklid' # distanzmas ist entweder euklid oder intersect
+descriptor_1 = '3d_histo' # diskriptoren sind: 1d_histo, 3d_histo, std, mean
 descriptor_2 = 'std'
 
 # Bilder laden und vorbereiten
@@ -113,7 +108,7 @@ va_imgs = v['data']
 va_labels = v['labels']
 
 #Ausfuehren der Auswertung
-est_labels = rgb_img_n_nearest_neighbour(va_imgs, tr_imgs, count_neighbour)
+est_labels = rgb_img_n_nearest_neighbour(va_imgs, tr_imgs)
 
 # Statistik
 print(guessing_accuracy(est_labels, va_labels))

@@ -67,7 +67,7 @@ def calculate_combined_weighted_distanze(image_1, image_2): # nimmt die euklidis
 	elif descriptor_2 == '0':
 		deskr_2_img_1 = 0
 		deskr_2_img_2 = 0
-	
+
 	if dist_ma == 'euklid':
 		distance_1 = eukl_dist(deskr_1_img_1, deskr_1_img_2)
 		distance_2 = eukl_dist(deskr_2_img_1, deskr_2_img_2)
@@ -98,11 +98,11 @@ def guessing_accuracy(est_labels, va_labels): # Wirft auf der console infos aus 
 
 # Params
 bin_count = 3
-neighbour_count = 10
-weight = 3
+neighbour_count = 8
+weight = 1
 dist_ma = 'euklid' # distanzmas ist entweder euklid oder intersect
 descriptor_1 = '3d_histo' # diskriptoren sind: 1d_histo, 3d_histo, std, mean
-descriptor_2 = 'std'
+descriptor_2 = '0'
 
 # Bilder laden und vorbereiten
 d = np.load('./trainingsDatenFarbe2.npz')

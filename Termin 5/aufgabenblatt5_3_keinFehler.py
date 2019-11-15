@@ -35,3 +35,7 @@ plt.imshow(img_matched_wally)
 plt.show()
 
 print("Wally: Gefundener Bereich: X=" + str(x_wally) + ", Y=" + str(y_wally))
+
+
+#Aufgabe 6
+# Weil das Gesicht von Wally auf der Briefmarke viel zu groß ist und so für den Computer eklatant anders aussieht als die Mini-Version die zum Suchen verwendet wird (?)

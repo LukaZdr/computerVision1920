@@ -29,7 +29,7 @@ img_matched_wally = feature.match_template(img_background, img_wally, pad_input=
 #plt.imshow(img_background)
 #plt.show()
 
-x_wally, y_wally = np.unravel_index(np.argmax(img_matched_wally), (1760, 2800))
+x_wally, y_wally = np.unravel_index(np.argmax(img_matched_wally), (img_matched_wally.shape[0], img_matched_wally.shape[1]))
 
 plt.imshow(img_matched_wally)
 plt.show()

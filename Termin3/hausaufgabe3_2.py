@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-Dies ist eine temporäre Skriptdatei.
-"""
-
 import numpy as np
 
 d = np.load('./trainingsDatenFarbe2.npz')

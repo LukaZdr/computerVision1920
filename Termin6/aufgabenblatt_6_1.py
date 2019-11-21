@@ -55,7 +55,7 @@ b = 0.001
 learn_rate=0.0000005
 
 for index in range(len(tr_labels)):
-    y= w1 * tr_mws[index] + w2*tr_stds[index] + b  
+    y= w1 * tr_mws[index] + w2*tr_stds[index] + b
     if np.sign(y) != np.sign(tr_labels[index]):
         # Variablen beladen
         temp_w1_neu = 2*(w1 * tr_mws[index] + w2 * tr_stds[index] + b - tr_labels[index]) * tr_mws[index]
@@ -64,7 +64,7 @@ for index in range(len(tr_labels)):
         w1 = w1 - learn_rate * temp_w1_neu
         w2 = w2 - learn_rate * temp_w2_neu
         b = b - learn_rate * temp_b_neu
-            
+
 est_list = []
 for index in range(len(vl_labels)):
   y = w1 * vl_mws[index] + w2 * vl_stds[index] + b
@@ -73,12 +73,12 @@ for index in range(len(vl_labels)):
   else:
     est_list.append(-1)
 
-    
+
 hits = 0
 for index in range(len(vl_labels)):
     if est_list[index] == vl_labels[index] :
         hits += 1
-        
+
 print((hits/len(vl_labels)))
 
 # Aufgabe 5
@@ -89,7 +89,7 @@ b = 0
 learn_rate=0.0000005
 
 for index in range(len(tr_labels)):
-    y= w1 * tr_mws[index] + w2*tr_stds[index] + b  
+    y= w1 * tr_mws[index] + w2*tr_stds[index] + b
     if np.sign(y) != np.sign(tr_labels[index]):
         # Variablen beladen
         temp_w1_neu = 2*(w1 * tr_mws[index] + w2 * tr_stds[index] + b - tr_labels[index]) * tr_mws[index]
@@ -98,7 +98,7 @@ for index in range(len(tr_labels)):
         w1 = w1 - learn_rate * temp_w1_neu
         w2 = w2 - learn_rate * temp_w2_neu
         b = b - learn_rate * temp_b_neu
-            
+
 est_list = []
 for index in range(len(vl_labels)):
   y = w1 * vl_mws[index] + w2 * vl_stds[index] + b
@@ -107,12 +107,12 @@ for index in range(len(vl_labels)):
   else:
     est_list.append(-1)
 
-    
+
 hits = 0
 for index in range(len(vl_labels)):
     if est_list[index] == vl_labels[index] :
         hits += 1
-        
+
 print((hits/len(vl_labels)))
 
 """ Trotz random generiertem startwert ist die genauigkeit immer 98%"""
@@ -127,7 +127,7 @@ epochs = 100
 
 for epoch in range(epochs):
   for index in range(len(tr_labels)):
-      y = w1 * tr_mws[index] + w2 * tr_stds[index] + b  
+      y = w1 * tr_mws[index] + w2 * tr_stds[index] + b
       if np.sign(y) != np.sign(tr_labels[index]):
           # Variablen beladen
           temp_w1_neu = 2*(w1 * tr_mws[index] + w2 * tr_stds[index] + b - tr_labels[index]) * tr_mws[index]
@@ -136,7 +136,7 @@ for epoch in range(epochs):
           w1 = w1 - learn_rate * temp_w1_neu
           w2 = w2 - learn_rate * temp_w2_neu
           b = b - learn_rate * temp_b_neu
-              
+
   est_list = []
   for index in range(len(vl_labels)):
     y=w1 *vl_mws[index] + w2*vl_stds[index] + b
@@ -145,10 +145,10 @@ for epoch in range(epochs):
     else:
       est_list.append(-1)
 
-      
+
   hits = 0
   for index in range(len(vl_labels)):
-      if est_list[index] == vl_labels[index] :
+      if est_list[index] == vl_labels[index]:
           hits += 1
 print((hits/len(vl_labels)))
 
@@ -156,7 +156,7 @@ print((hits/len(vl_labels)))
 
 # Aufgabe 7
 
-x_values = []        
+x_values = []
 y_values = []
 
 for x in range(255):

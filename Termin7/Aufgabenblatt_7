@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import numpy as np
+from keras.datasets import cifar10
+from keras.utils import np_utils
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
+from keras.optimizers import SGD
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+
+#Aufgabe 1.4
+
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
+X_train /= 255
+X_test /= 255
+
+y_train_labels = np_utils.to_categorical(y_train, 10)
+y_test_labels = np_utils.to_categorical(y_test, 10)
+
+X_train_flipped = np.fliplr(X_train)
+X_train = np.concatenate([X_train, X_train_flipped])
+y_train_labels = np.concatenate([y_train_labels, y_train_labels])
+
+model = Sequential()
+model.add(Conv2D(32, (3, 3), activation="relu", name="conv1", padding="same", input_shape=(32,32,3)))
+model.add(Conv2D(32, (3, 3), activation="relu", name="conv2", padding="same"))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(64, (3, 3), activation="relu", name="conv3", padding="same", input_shape=(32,32,3)))
+model.add(Conv2D(64, (3, 3), activation="relu", name="conv4", padding="same"))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+
+model.add(Flatten())
+model.add(Dense(256, activation='relu', name='dens1'))
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01, momentum=0.9), metrics=['accuracy'])
+callbacks_list = [EarlyStopping(monitor="val_loss",min_delta=0, patience=3), 
+                  ModelCheckpoint("./data.h5", monitor="val_loss", verbose=0, save_best_only=True, save_weights_only=False, mode="auto", period=1)]
+model.fit(X_train, y_train_labels, batch_size=32, epochs=20, validation_split=0.2, verbose=1, callbacks=callbacks_list)
+model.load_weights("./data.h5", by_name=True)
+
+score = model.evaluate(X_test, y_test_labels, verbose=1)
+
+# Score: Loss: 3.746610185623169, Accuracy: 0.546999990940094
+
+# Aufgabe 5: 1.2612496110916138, 0.5759000182151794] ist das beste Ergebniss
+
+# Aufgabe 6: [1.182388154220581, 0.6128000020980835] beste Ergebniss
+
+# Aufgabe 7: [1.0467135410308839, 0.6331999897956848]
+
+# Aufgabe 8: [0.9034959287643433, 0.6858999729156494]
+
+# Aufgabe 9:
+#   0.1 [2.307708253479004, 0.10000000149011612]
+#   0.01: [0.9034959287643433, 0.6858999729156494]
+#   0.001: [0.9673481069564819, 0.6786999702453613]
+
+# Aufgabe 10:
+#   4: [2.3066828170776366, 0.10000000149011612]
+#   32: [0.9034959287643433, 0.6858999729156494]
+#   128: [0.9667604145050048, 0.6679999828338623]
+
+#Aufgabe 11
+# [0.9348626041412353, 0.6887000203132629]
